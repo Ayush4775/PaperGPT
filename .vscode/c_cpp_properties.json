@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/local/include",
+                "/opt/homebrew/include",
                 "/Users/ayushchaudhary/vcpkg/packages/jsoncpp_arm64-osx/include"
             ],
             "defines": [],

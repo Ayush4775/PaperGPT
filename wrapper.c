@@ -1,4 +1,4 @@
-#include "embedding.h"
+#include "header/embedding.h"
 
 void *initialize(const char *key, int token_limit, const char *embedding_model,
                  const char *propmpt_model) {
@@ -14,3 +14,5 @@ void entryFunction(void *object, char *prompt) {
   OpenAPI *o = (OpenAPI *)object;
   o->entryFunction(prompt);
 }
+
+// create a header file

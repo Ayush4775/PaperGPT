@@ -10,6 +10,6 @@ extern const std::string BASE_POINTS;
 extern const std::string CHAT_PROMPTS;
 extern const std::string SUMMARY_CHAT;
 extern const std::string UPDATED_PROMPT;
-extern const std::string Prompts::TITLE_PROMPT;
+extern const std::string TITLE_PROMPT;
 
 } // namespace Prompts

@@ -1,4 +1,4 @@
-#include "embedding.h"
+#include "header/embedding.h"
 
 OpenAPI::OpenAPI(string api_key, int token_limit = 1000,
                  string embeddingModel = "text-davinci-002",
@@ -13,6 +13,7 @@ OpenAPI::OpenAPI(string api_key, int token_limit = 1000,
 
 void OpenAPI::setupCurlHandle(CURL *curl, CurlType curlType) {
   curl = curl_easy_init();
+  string url;
   if (curl) {
     struct curl_slist *headers = NULL;
     headers = curl_slist_append(headers, "Content-Type: application/json");
@@ -20,10 +21,9 @@ void OpenAPI::setupCurlHandle(CURL *curl, CurlType curlType) {
                                 ("Authorization: Bearer " + api_key).c_str());
 
     if (curlType == EMBED) {
-      string url = "https://api.openai.com/v1/embeddings";
+      url = "https://api.openai.com/v1/embeddings";
     } else {
-      string url =
-          "https://api.openai.com/v1/engines/" + promotModel + "/completions";
+      url = "https://api.openai.com/v1/engines/" + promotModel + "/completions";
     }
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -34,29 +34,33 @@ void OpenAPI::setupCurlHandle(CURL *curl, CurlType curlType) {
 }
 json &OpenAPI::sendRequest(string paragraph, CurlType curlType) {
   string postFields, responseString;
+  CURLcode res;
 
-  if (CurlType == EMBED) {
+  if (curlType == CurlType::EMBED) {
     postFields = "{\"input\":\"" + paragraph + "\",\"model\":\"" +
                  embeddingModel + "\"}";
+    curl_easy_setopt(embeddingCurl, CURLOPT_POSTFIELDS, postFields.c_str());
+    curl_easy_setopt(embeddingCurl, CURLOPT_WRITEDATA, &responseString);
+    res = curl_easy_perform(embeddingCurl);
   } else {
-    postFields = "{\"prompt\":\"" + prompt + "\",\"max_tokens\":2000}";
+    postFields = "{\"prompt\":\"" + paragraph + "\",\"max_tokens\":2000}";
+    curl_easy_setopt(promptCurl, CURLOPT_POSTFIELDS, postFields.c_str());
+    curl_easy_setopt(promptCurl, CURLOPT_WRITEDATA, &responseString);
+    res = curl_easy_perform(promptCurl);
   }
-  curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postFields.c_str());
-  curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseString);
 
-  res = curl_easy_perform(curl);
   if (res != CURLE_OK) {
     fprintf(stderr, "curl_easy_perform() failed: %s\n",
             curl_easy_strerror(res));
   }
 
-  json response_json = json::parse(response_string);
+  json response_json = json::parse(responseString);
   return response_json;
 }
 
 void OpenAPI::sendEmbeddingRequest(string chunk, vector<double> &embedding) {
   json &response_json = sendRequest(chunk, EMBED);
-  embedding = response_json["data"][0]["embedding"];
+  embedding = response_json["data"][0]["embedding"].get<std::vector<double>>();
 }
 string OpenAPI::sendPromptRequest(string prompt) {
   json &response_json = sendRequest(prompt, PROMPT);
@@ -88,7 +92,7 @@ void OpenAPI::storeEmbeddings(string &paragraph) {
     if (count >= TOKEN_LIMIT * 0.75) {
       vector<double> embedding;
       sendEmbeddingRequest(chunk, embedding);
-      data.push_back(
+      embedding_data.push_back(
           make_pair((make_pair(chunk, std::move(embedding))), count));
       count = 0;
       chunk = "";
@@ -97,7 +101,8 @@ void OpenAPI::storeEmbeddings(string &paragraph) {
   if (chunk != "") {
     vector<double> embedding;
     sendEmbeddingRequest(chunk, embedding);
-      data.push_back(make_pair((make_pair(chunk, std::move(embedding)), count));
+    embedding_data.push_back(
+        make_pair(make_pair(chunk, std::move(embedding)), count));
   }
 }
 
@@ -110,7 +115,7 @@ size_t OpenAPI::writeFunction(void *ptr, size_t size, size_t nmemb,
 string OpenAPI::getParagraphs(vector<double> &embedding) {
 
   // sorting embeddings based on the given embedding
-  sort(embedding_data.begin(), embedding_data.end(), [](auto &a, auto &b) {
+  sort(embedding_data.begin(), embedding_data.end(), [&](auto &a, auto &b) {
     findVectorSimilarity(a.first.second, embedding) >
         findVectorSimilarity(b.first.second, embedding);
   });
@@ -119,20 +124,21 @@ string OpenAPI::getParagraphs(vector<double> &embedding) {
   int count = 0;
   int i = 0;
   string paragraphs = "";
+  string cds = "sas";
   while (count < 2 * TOKEN_LIMIT * 0.75) {
-      paragraphs + = embedding_data[i].first.first + '\n';
-      count += embedding_data[i].second;
+    paragraphs += embedding_data[i].first.first + '\n';
+    count += embedding_data[i].second;
   }
   return paragraphs;
 }
 
 string OpenAPI::entryFunction(string &prompt) {
   vector<double> embedding;
-  api.sendEmbeddingRequest(prompt, embedding);
-  string paragraphs = api.getParagraphs(embedding);
+  sendEmbeddingRequest(prompt, embedding);
+  string paragraphs = getParagraphs(embedding);
 
   string updated_prompt =
-      format(Prompts::UPDATED_PROMPT, "", pargraphs, prompt);
-  string response = api.sendPromptRequest(updated_prompt);
+      format(Prompts::UPDATED_PROMPT, ".", paragraphs, prompt);
+  string response = sendPromptRequest(updated_prompt);
   return response;
 }
