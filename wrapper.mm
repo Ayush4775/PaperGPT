@@ -2,7 +2,7 @@
 #import "header/embedding.h"
 
 @implementation MyCppClassWrapper {
-  OpenAPI _myCppClass;
+  OpenAPI *_myCppClass;
 }
 
 - (instancetype)initWithapiKey:(NSString *)apiKey
@@ -13,21 +13,22 @@
   if (self) {
     std::string api_key = [apiKey UTF8String];
     std::string embedding_model = [embeddingModel UTF8String];
-    std::string propmpt_model = [promptModel UTF8String];
-    _myCppClass = OpenAPI(api_key, tokenLimit, embeddingModel, promptModel);
+    std::string prompt_model = [promptModel UTF8String];
+    _myCppClass =
+        new OpenAPI(api_key, tokenLimit, embedding_model, prompt_model);
   }
   return self;
 }
 
 - (void)storeEmbeddings:(NSString *)paragraph {
-  std::string paragraph = [paragraph UTF8String];
+  std::string par = [paragraph UTF8String];
 
-  _myCppClass.storeEmbeddings(paragraph);
+  _myCppClass->storeEmbeddings(par);
 }
 - (void)entryFunction:(NSString *)prompt {
-  std::string prompt = [prompt UTF8String];
+  std::string promptString = [prompt UTF8String];
 
-  _myCppClass.entryFunction(prompt);
+  _myCppClass->entryFunction(promptString);
 }
 
 @end

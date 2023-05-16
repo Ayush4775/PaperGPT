@@ -1,5 +1,5 @@
-CMakeFiles/my_project.dir/main.cpp.o: \
-  /Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/main.cpp \
+CMakeFiles/my_project_lib.dir/embedding.cpp.o: \
+  /Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/embedding.cpp \
   /Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/header/embedding.h \
   /Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/header/prompts.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/iostream \
@@ -432,7 +432,6 @@ CMakeFiles/my_project.dir/main.cpp.o: \
   /opt/local/include/curl/easy.h /opt/local/include/curl/multi.h \
   /opt/local/include/curl/urlapi.h /opt/local/include/curl/options.h \
   /opt/local/include/curl/header.h /opt/local/include/curl/websockets.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/format \
   /opt/homebrew/include/nlohmann/json.hpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/numeric \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/cmath \
@@ -499,4 +498,5 @@ CMakeFiles/my_project.dir/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/any \
   /opt/homebrew/include/nlohmann/detail/macro_unscope.hpp \
   /opt/homebrew/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/sstream
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/include/c++/v1/sstream \
+  /opt/homebrew/include/fmt/core.h

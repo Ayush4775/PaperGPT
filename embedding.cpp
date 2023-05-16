@@ -1,8 +1,7 @@
 #include "header/embedding.h"
-
-OpenAPI::OpenAPI(string api_key, int token_limit = 1000,
-                 string embeddingModel = "text-davinci-002",
-                 string promotModel = "davinci")
+#include <fmt/core.h>
+OpenAPI::OpenAPI(string api_key, int token_limit, string embeddingModel,
+                 string promotModel)
     : api_key(api_key), TOKEN_LIMIT(token_limit),
       embeddingModel(embeddingModel), promotModel(promotModel) {
   curl_global_init(CURL_GLOBAL_ALL);
@@ -28,11 +27,12 @@ void OpenAPI::setupCurlHandle(CURL *curl, CurlType curlType) {
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunction);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &OpenAPI::writeFunction);
   } else {
   } // TODO: Handle error
 }
-json &OpenAPI::sendRequest(string paragraph, CurlType curlType) {
+void OpenAPI::sendRequest(json &response_json, string paragraph,
+                          CurlType curlType) {
   string postFields, responseString;
   CURLcode res;
 
@@ -54,16 +54,17 @@ json &OpenAPI::sendRequest(string paragraph, CurlType curlType) {
             curl_easy_strerror(res));
   }
 
-  json response_json = json::parse(responseString);
-  return response_json;
+  response_json = json::parse(responseString);
 }
 
 void OpenAPI::sendEmbeddingRequest(string chunk, vector<double> &embedding) {
-  json &response_json = sendRequest(chunk, EMBED);
+  json response_json;
+  sendRequest(response_json, chunk, EMBED);
   embedding = response_json["data"][0]["embedding"].get<std::vector<double>>();
 }
 string OpenAPI::sendPromptRequest(string prompt) {
-  json &response_json = sendRequest(prompt, PROMPT);
+  json response_json;
+  sendRequest(response_json, prompt, PROMPT);
   return response_json["choices"][0]["text"];
 }
 
@@ -116,8 +117,8 @@ string OpenAPI::getParagraphs(vector<double> &embedding) {
 
   // sorting embeddings based on the given embedding
   sort(embedding_data.begin(), embedding_data.end(), [&](auto &a, auto &b) {
-    findVectorSimilarity(a.first.second, embedding) >
-        findVectorSimilarity(b.first.second, embedding);
+    return findVectorSimilarity(a.first.second, embedding) >
+           findVectorSimilarity(b.first.second, embedding);
   });
 
   // getting the first paragraphs till the token limit is reached
@@ -138,7 +139,7 @@ string OpenAPI::entryFunction(string &prompt) {
   string paragraphs = getParagraphs(embedding);
 
   string updated_prompt =
-      format(Prompts::UPDATED_PROMPT, ".", paragraphs, prompt);
+      fmt::format(Prompts::UPDATED_PROMPT, ".", paragraphs, prompt);
   string response = sendPromptRequest(updated_prompt);
   return response;
 }

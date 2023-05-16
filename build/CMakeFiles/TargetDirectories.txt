@@ -1,3 +1,4 @@
-/Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/build/CMakeFiles/my_project.dir
+/Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/build/CMakeFiles/my_project_lib.dir
+/Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/build/CMakeFiles/MyCppClassWrapper.dir
 /Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/build/CMakeFiles/edit_cache.dir
 /Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/build/CMakeFiles/rebuild_cache.dir

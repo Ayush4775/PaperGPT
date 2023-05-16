@@ -117,24 +117,37 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named my_project
+# Target rules for targets named my_project_lib
 
 # Build rule for target.
-my_project: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 my_project
-.PHONY : my_project
+my_project_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 my_project_lib
+.PHONY : my_project_lib
 
 # fast build rule for target.
-my_project/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/build
-.PHONY : my_project/fast
+my_project_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/build
+.PHONY : my_project_lib/fast
+
+#=============================================================================
+# Target rules for targets named MyCppClassWrapper
+
+# Build rule for target.
+MyCppClassWrapper: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MyCppClassWrapper
+.PHONY : MyCppClassWrapper
+
+# fast build rule for target.
+MyCppClassWrapper/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCppClassWrapper.dir/build.make CMakeFiles/MyCppClassWrapper.dir/build
+.PHONY : MyCppClassWrapper/fast
 
 embedding.o: embedding.cpp.o
 .PHONY : embedding.o
 
 # target to build an object file
 embedding.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/embedding.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/embedding.cpp.o
 .PHONY : embedding.cpp.o
 
 embedding.i: embedding.cpp.i
@@ -142,7 +155,7 @@ embedding.i: embedding.cpp.i
 
 # target to preprocess a source file
 embedding.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/embedding.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/embedding.cpp.i
 .PHONY : embedding.cpp.i
 
 embedding.s: embedding.cpp.s
@@ -150,39 +163,15 @@ embedding.s: embedding.cpp.s
 
 # target to generate assembly for a file
 embedding.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/embedding.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/embedding.cpp.s
 .PHONY : embedding.cpp.s
-
-main.o: main.cpp.o
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/main.cpp.s
-.PHONY : main.cpp.s
 
 prompts.o: prompts.cpp.o
 .PHONY : prompts.o
 
 # target to build an object file
 prompts.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/prompts.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/prompts.cpp.o
 .PHONY : prompts.cpp.o
 
 prompts.i: prompts.cpp.i
@@ -190,7 +179,7 @@ prompts.i: prompts.cpp.i
 
 # target to preprocess a source file
 prompts.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/prompts.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/prompts.cpp.i
 .PHONY : prompts.cpp.i
 
 prompts.s: prompts.cpp.s
@@ -198,8 +187,32 @@ prompts.s: prompts.cpp.s
 
 # target to generate assembly for a file
 prompts.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project.dir/build.make CMakeFiles/my_project.dir/prompts.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/my_project_lib.dir/build.make CMakeFiles/my_project_lib.dir/prompts.cpp.s
 .PHONY : prompts.cpp.s
+
+wrapper.o: wrapper.mm.o
+.PHONY : wrapper.o
+
+# target to build an object file
+wrapper.mm.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCppClassWrapper.dir/build.make CMakeFiles/MyCppClassWrapper.dir/wrapper.mm.o
+.PHONY : wrapper.mm.o
+
+wrapper.i: wrapper.mm.i
+.PHONY : wrapper.i
+
+# target to preprocess a source file
+wrapper.mm.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCppClassWrapper.dir/build.make CMakeFiles/MyCppClassWrapper.dir/wrapper.mm.i
+.PHONY : wrapper.mm.i
+
+wrapper.s: wrapper.mm.s
+.PHONY : wrapper.s
+
+# target to generate assembly for a file
+wrapper.mm.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyCppClassWrapper.dir/build.make CMakeFiles/MyCppClassWrapper.dir/wrapper.mm.s
+.PHONY : wrapper.mm.s
 
 # Help Target
 help:
@@ -209,16 +222,17 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... my_project"
+	@echo "... MyCppClassWrapper"
+	@echo "... my_project_lib"
 	@echo "... embedding.o"
 	@echo "... embedding.i"
 	@echo "... embedding.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... prompts.o"
 	@echo "... prompts.i"
 	@echo "... prompts.s"
+	@echo "... wrapper.o"
+	@echo "... wrapper.i"
+	@echo "... wrapper.s"
 .PHONY : help
 
 

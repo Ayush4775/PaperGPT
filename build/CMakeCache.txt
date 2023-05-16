@@ -222,11 +222,17 @@ CURL_LIBRARY_DEBUG:FILEPATH=CURL_LIBRARY_DEBUG-NOTFOUND
 //Path to a library.
 CURL_LIBRARY_RELEASE:FILEPATH=/opt/local/lib/libcurl.dylib
 
+//Dependencies for the target
+MyCppClassWrapper_LIB_DEPENDS:STATIC=general;my_project_lib;
+
 //Arguments to supply to pkg-config
 PKG_CONFIG_ARGN:STRING=
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
+
+//The directory containing a CMake configuration file for fmt.
+fmt_DIR:PATH=/opt/homebrew/lib/cmake/fmt
 
 //Value Computed by CMake
 my_project_BINARY_DIR:STATIC=/Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++/build
@@ -236,6 +242,9 @@ my_project_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 my_project_SOURCE_DIR:STATIC=/Users/ayushchaudhary/ChatGPT-Paper-Reader/gpt_reader_c++
+
+//Dependencies for the target
+my_project_lib_LIB_DEPENDS:STATIC=general;CURL::libcurl;general;fmt::fmt;
 
 //The directory containing a CMake configuration file for nlohmann_json.
 nlohmann_json_DIR:PATH=/opt/homebrew/share/cmake/nlohmann_json

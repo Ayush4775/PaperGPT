@@ -11,6 +11,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.24.4/CMakeCCompiler.cmake"
   "CMakeFiles/3.24.4/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.24.4/CMakeSystem.cmake"
+  "/opt/homebrew/lib/cmake/fmt/fmt-config-version.cmake"
+  "/opt/homebrew/lib/cmake/fmt/fmt-config.cmake"
+  "/opt/homebrew/lib/cmake/fmt/fmt-targets-release.cmake"
+  "/opt/homebrew/lib/cmake/fmt/fmt-targets.cmake"
   "/opt/homebrew/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake"
   "/opt/homebrew/share/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake"
   "/opt/homebrew/share/cmake/nlohmann_json/nlohmann_jsonTargets.cmake"
@@ -55,5 +59,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/my_project.dir/DependInfo.cmake"
+  "CMakeFiles/my_project_lib.dir/DependInfo.cmake"
+  "CMakeFiles/MyCppClassWrapper.dir/DependInfo.cmake"
   )

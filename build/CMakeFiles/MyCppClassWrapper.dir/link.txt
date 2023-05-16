@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libMyCppClassWrapper.a CMakeFiles/MyCppClassWrapper.dir/wrapper.mm.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libMyCppClassWrapper.a

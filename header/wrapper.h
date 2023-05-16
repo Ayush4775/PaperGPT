@@ -1,3 +1,4 @@
+#pragma once
 #import <Foundation/Foundation.h>
 
 @interface MyCppClassWrapper : NSObject
@@ -7,4 +8,5 @@
                    promptModel:(NSString *)promptModel;
 - (void)storeEmbeddings:(NSString *)paragraph;
 - (void)entryFunction:(NSString *)prompt;
+
 @end

@@ -2,7 +2,6 @@
 
 #include "prompts.h"
 #include <curl/curl.h>
-#include <format>
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <sstream>
@@ -17,7 +16,7 @@ class OpenAPI {
 
 private:
   string api_key;
-  const int TOKEN_LIMIT;
+  int TOKEN_LIMIT;
   EmbeddingDataType embedding_data;
   CURL *embeddingCurl;
   CURL *promptCurl;
@@ -28,7 +27,7 @@ private:
   double findVectorSimilarity(vector<double> &a, vector<double> &b);
   void setupCurlHandle(CURL *curl, CurlType curlType);
   size_t writeFunction(void *ptr, size_t size, size_t nmemb, string *data);
-  json &sendRequest(string paragraph, CurlType curlType);
+  void sendRequest(json &response_json, string paragraph, CurlType curlType);
   void sendEmbeddingRequest(string chunk, vector<double> &embedding);
   string sendPromptRequest(string prompt);
   string getParagraphs(vector<double> &embedding);
