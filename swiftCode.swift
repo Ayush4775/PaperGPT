@@ -2,8 +2,8 @@
 import Foundation
 
 @objc class MyCppClassWrapper: NSObject {
-    init(string1: String, string2: String, int1: Int, int2: Int) {
-        _myCppClassWrapper = MyCppClassWrapper(string1: string1, string2: string2, int1: int1, int2: int2)
+    init(string1: String, int1: Int, string2: String, string3: String) {
+        _myCppClassWrapper = MyCppClassWrapper(string1: string1, int1: Int, string2: String, string3: String) // api key, tokens, embedding model, prompt model
     }
     
     private let _myCppClassWrapper: MyCppClassWrapper
