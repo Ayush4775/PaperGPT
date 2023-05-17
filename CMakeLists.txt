@@ -20,4 +20,4 @@ add_library(MyCppClassWrapper STATIC wrapper.mm)
 
 # Link with the curl and nlohmann_json libraries
 target_link_libraries(my_project_lib PRIVATE CURL::libcurl nlohmann_json::nlohmann_json PRIVATE fmt::fmt)
-target_link_libraries(MyCppClassWrapper my_project_lib nlohmann_json::nlohmann_json)
+target_link_libraries(MyCppClassWrapper my_project_lib nlohmann_json::nlohmann_json CURL::libcurl)
