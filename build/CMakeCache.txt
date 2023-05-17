@@ -223,7 +223,7 @@ CURL_LIBRARY_DEBUG:FILEPATH=CURL_LIBRARY_DEBUG-NOTFOUND
 CURL_LIBRARY_RELEASE:FILEPATH=/opt/local/lib/libcurl.dylib
 
 //Dependencies for the target
-MyCppClassWrapper_LIB_DEPENDS:STATIC=general;my_project_lib;
+MyCppClassWrapper_LIB_DEPENDS:STATIC=general;my_project_lib;general;CURL::libcurl;
 
 //Arguments to supply to pkg-config
 PKG_CONFIG_ARGN:STRING=
