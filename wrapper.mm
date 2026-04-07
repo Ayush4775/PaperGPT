@@ -25,12 +25,10 @@
 
   _myCppClass->storeEmbeddings(par);
 }
-- (void)entryFunction:(NSString *)prompt {
+- (NSString *)entryFunction:(NSString *)prompt {
   std::string promptString = [prompt UTF8String];
-
-  _myCppClass->entryFunction(promptString);
+  std::string result = _myCppClass->entryFunction(promptString);
+  return [NSString stringWithUTF8String:result.c_str()];
 }
 
 @end
-
-// create a header file

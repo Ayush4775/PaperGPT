@@ -1,18 +1,27 @@
 
 import Foundation
 
-@objc class MyCppClassWrapper: NSObject {
-    init(string1: String, int1: Int, string2: String, string3: String) {
-        _myCppClassWrapper = MyCppClassWrapper(string1: string1, int1: Int, string2: String, string3: String) // api key, tokens, embedding model, prompt model
+/// Swift-facing wrapper around the Objective-C++ MyCppClassWrapper bridge.
+/// Requires a bridging header that imports "wrapper.h".
+class PaperGPTWrapper {
+    private let wrapper: MyCppClassWrapper // ObjC++ class visible via bridging header
+
+    init(apiKey: String, tokenLimit: Int, embeddingModel: String, promptModel: String) {
+        wrapper = MyCppClassWrapper(
+            apiKey: apiKey,
+            tokenLimit: Int32(tokenLimit),
+            embeddingModel: embeddingModel,
+            promptModel: promptModel
+        )
     }
-    
-    private let _myCppClassWrapper: MyCppClassWrapper
-    
-    func storeEmbeddings(string: String) {
-        _myCppClassWrapper.storeEmbeddings(string)
+
+    /// Chunk and embed the paper text for later similarity search.
+    func storeEmbeddings(_ text: String) {
+        wrapper.storeEmbeddings(text)
     }
-    
-    func entryFunction(string: String) {
-        _myCppClassWrapper.entryFunction(string)
+
+    /// Ask a question about the stored paper and return the AI-generated answer.
+    func ask(_ prompt: String) -> String {
+        return wrapper.entryFunction(prompt)
     }
 }

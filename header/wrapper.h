@@ -7,6 +7,6 @@
                 embeddingModel:(NSString *)embeddingModel
                    promptModel:(NSString *)promptModel;
 - (void)storeEmbeddings:(NSString *)paragraph;
-- (void)entryFunction:(NSString *)prompt;
+- (NSString *)entryFunction:(NSString *)prompt;
 
 @end
